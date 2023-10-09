@@ -1,21 +1,9 @@
-import os
-import requests
-from dotenv import load_dotenv
+from temperature.temperature import get_city_temperature
 
-load_dotenv()
-
-api_key = os.getenv("API_KEY")
-base_url = "https://api.openweathermap.org/data/2.5/weather?"
-city_name = input("Enter city name : ")
-complete_url = base_url + "appid=" + api_key + "&q=" + city_name
-response = requests.get(complete_url)
-response_json = response.json()
-
-if response_json["cod"] != "404":
-    data = response_json["main"]
-    temperature = data["temp"]
-    # weather = data["weather"][0]["description"]
-    print(f"Temperature : {str(temperature)}")
-    # print(f"Weather : {str(weather)}")
-else:
-    print("ERROR : Cannot Find City")
+if __name__ == "__main__":
+    city_name = input("Enter city name : ")
+    city_temperature = get_city_temperature(city_name)
+    if city_temperature is not None:
+        print(f"The Temperature of {city_name} is {city_temperature}")
+    else:
+        print("ERROR : City Temperature cannot be found")
