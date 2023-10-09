@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
 uagents = "^0.6.2"
+poetry-dotenv-plugin = "^0.2.0"
 
 
 [build-system]
