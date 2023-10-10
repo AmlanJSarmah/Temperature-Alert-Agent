@@ -12,15 +12,21 @@ def kelvin_to_fahrenheit(temperature):
 
 
 def get_city_temperature(city_name, temperature_unit):
+    # We load the api key from .env file using load_dotenv() and os.getenv()
     load_dotenv()
     api_key = os.getenv("API_KEY")
+
+    # The URL for Open Weather Map API
     base_url = "https://api.openweathermap.org/data/2.5/weather?"
     complete_url = base_url + "appid=" + api_key + "&q=" + city_name
-    response = requests.get(complete_url)
-    response_json = response.json()
 
-    if response_json["cod"] != "404":
-        data = response_json["main"]
+    # We request an api call using requests.get() and store it in a response variable, we ten cconvert the response
+    # to JSON format
+    response = requests.get(complete_url)
+    response = response.json()
+
+    if response["cod"] != "404":
+        data = response["main"]
         temperature = data["temp"]
         if temperature_unit == "C":
             temperature = kelvin_to_celsius(temperature)
